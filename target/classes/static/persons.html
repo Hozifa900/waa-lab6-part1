@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat Application</title>
+    <script type="text/javascript">
+      v =document.getElementsByTagName("pre")[0].innerHTML;
+
+// Split the string into individual JSON objects based on newline characters
+var jsonStrings = v.split('\n\n');
+console.log(jsonStrings, "before");
+jsonStrings[jsonStrings.length - 1] = jsonStrings[jsonStrings.length - 1].replace(/\n/g, '');
+console.log(jsonStrings, "after");
+
+// Create an array to store the parsed JSON objects
+var jsonObjects = [];
+
+// Parse each JSON string and store it in the array
+for (var i = 0; i < jsonStrings.length; i++) {
+    try {
+        var jsonString = jsonStrings[i].replace('data:', '');
+        var jsonObject = JSON.parse(jsonString);
+        jsonObjects.push(jsonObject);
+    } catch (error) {
+        console.error('Error parsing JSON at index ' + i + ': ' + error);
+    }
+}
+console.log(jsonObjects);
+
+    </script>
+</head>
+<body>
+<h1> Chat Room </h1>
+<div>
+    <button id="connect" type="button" onclick="connect();">Connect</button>
+    <button id="disconnect" type="button" onclick="disconnect();">Disconnect</button>
+</div>
+<textarea id="messages" readonly cols="40" rows="15"> </textarea><br/>
+UserName: <input id="userName" type="text"/><br/>
+Message<input id="messageInput" type="text" width="300"/><br/>
+<input type="button" value="Send" onclick="sendMessage();"/>
+<br/>
+<div style="color:red" id="status"></div>
+</body>
+</html>
